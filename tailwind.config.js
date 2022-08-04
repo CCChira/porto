@@ -14,7 +14,7 @@ module.exports = {
         'white': '#FFF7ED',
       },
       backgroundImage: {
-        'div-separator': 'url("../assets/layered-waves-haikei-2.svg")',
+        'div-separator': 'url("../assets/wave.svg")',
       },
       keyframes: {
         'slide': {
