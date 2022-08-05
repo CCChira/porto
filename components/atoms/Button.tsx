@@ -1,9 +1,11 @@
 import React from 'react'
+import Link from 'next/link';
 
 type Props  = {
     type: string,
     modifiers: string,
     children: JSX.Element | string,
+    link: string,
 }
 const handleTypeChooser = (type: string) => {
     switch (type) {
@@ -17,10 +19,17 @@ const handleTypeChooser = (type: string) => {
             return 'bg-black text-white font-bold py-2 px-4 rounded'
     }
 }
-const Button: React.FC<Props> = ({type, modifiers, children}) => {
+const Button: React.FC<Props> = ({type, modifiers, children, link}) => {
     const finalButtonClass: string = `px-4 py-2 rounded-full font-bold text-sm transition ease-in-out ${handleTypeChooser(type)} ${modifiers}`;
     return (
-        <button className = {finalButtonClass}>
+        link ? 
+        <Link href = { link }>
+            <div className = { `${finalButtonClass} flex items-center justify-center cursor-pointer` }>
+                { children }
+            </div>
+        </Link>
+        :
+        <button className = { finalButtonClass }>
             { children }
         </button>
     );

@@ -14,12 +14,12 @@ module.exports = {
         'white': '#FFF7ED',
       },
       backgroundImage: {
-        'div-separator': 'url("../assets/wave.svg")',
+        'div-separator': "url('../assets/wave5.svg')",
       },
       keyframes: {
         'slide': {
           '0%': {
-            transform: 'translateX(-400px)',
+            transform: 'translateX(-800px)',
           },
           '100%': {
             transform: 'translateX(0)',
@@ -32,11 +32,18 @@ module.exports = {
           '100%': {
             opacity: '1',
           }
-        }
+        },
+        'fade-half': {
+          '100%': {
+            opacity: '0.5',
+          },
+        },
+        
       },
       animation: {
         'slide-in': 'slide 1s ease-in-out',
-        'fade-in': 'fade 1s ease-in-out',
+        'fade-in': 'fade 1s ease-in',
+        'fade-in-out-half': 'fade-half 1s ease-in-out',
       }
     },
   },
