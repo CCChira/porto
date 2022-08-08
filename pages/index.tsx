@@ -1,8 +1,10 @@
-import Image from 'next/image'
-import OrangeSlice from '../assets/orange-svgrepo-com.svg';
-import Button from '../components/atoms/Button';
+import React, { useState, useEffect } from 'react'; //react stuff
+import Image from 'next/image' //nextJS stuff
+
+import Button from '../components/atoms/Button'; //MY components
 import Header from '../components/Header';
-import { useState, useEffect } from 'react';
+
+import OrangeSlice from '../assets/orange-svgrepo-com.svg'; //constants, assets and types
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);

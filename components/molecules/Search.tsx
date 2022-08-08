@@ -1,16 +1,20 @@
-import React, { useCallback } from 'react'
-import { useState, 
-         useEffect,
-         useMemo } from 'react'
-import { Movie } from '../../interfaces/movieResponse'
-import {debounce} from 'lodash';
-import MovieCard from './MovieCard';
+import React, 
+        { useCallback,
+          useState, 
+          useEffect,
+          useMemo } from 'react'; //react Stuff
 
+import { debounce } from 'lodash'; //lodash stuff
+
+import MovieCard from './MovieCard'; //components
+
+import { Movie } from '../../interfaces/movieResponse'; //constants, assets and types
 type Props  = {
     items: Movie[] | [],
     modifiers: string,
     childComponentModifiers: string,
     renderFunction: Function,
+    loading: boolean,
 }
 const filterItems = (itemsToFilter: Movie[] | [], searchTerm: string) => {
     const filteredItems = itemsToFilter.filter(item => {
@@ -21,7 +25,7 @@ const filterItems = (itemsToFilter: Movie[] | [], searchTerm: string) => {
     })
     return filteredItems;
 }
-const Search: React.FC<Props> = ({items, modifiers, renderFunction}) => {
+const Search: React.FC<Props> = ({items, modifiers, renderFunction, loading}) => {
     const [searchTerm, setSearchTerm] = useState('');
     let displayList = items;
     const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +36,6 @@ const Search: React.FC<Props> = ({items, modifiers, renderFunction}) => {
     }
     //const debouncedResults = useCallback(() => {debounce(handleTextChange, 300); console.log('caca')}, [searchTerm]);
     
-  
     return (
         <div className='flex justify-center flex-wrap flex-col w-full'>
             <input type="text" 
@@ -43,7 +46,14 @@ const Search: React.FC<Props> = ({items, modifiers, renderFunction}) => {
                               focus:border-primary transition ease-in-out" 
                     placeholder='Search in Popular'/>
             <div className='flex flex-wrap justify-center w-full'>
-                {renderFunction(displayList)}
+                {
+                loading 
+                    ? 
+                    <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
+                    :
+                    renderFunction(displayList, modifiers)
+                }
+                
             </div>
         </div>
     );

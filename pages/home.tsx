@@ -1,15 +1,19 @@
-import * as React from 'react';
-import Image from 'next/image';
-import { NextPage } from 'next';
+import React, { useEffect, useState } from 'react';//react stuff
+import Image from 'next/image'; 
+import { NextPage } from 'next';//nextJS stuff
+import Link from 'next/link'; 
+
+import { faBars } from '@fortawesome/free-solid-svg-icons';//font awesome stuff
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
+
+
+import Search from '../components/molecules/Search'; //MY components
 import Header from '../components/Header';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import OrangeSlice from '../assets/orange-svgrepo-com.svg';
-import Link from 'next/link';
 import MovieCard from '../components/molecules/MovieCard';
-import { useEffect, useState } from 'react';
+
+import OrangeSlice from '../assets/orange-svgrepo-com.svg'; //constants, assets and types
 import { Movie } from '../interfaces/movieResponse';
-import Search from '../components/molecules/Search';
+
 export interface Props {
 }
 const renderItems = (listToDisplay: Movie[], modifiers: string) => {
@@ -19,8 +23,11 @@ const landingPage: NextPage<Props> = () => {
     const url = "https://api.themoviedb.org/3/trending/all/day?api_key=e6fb97fa91c65ad6806fafc55a2f2e5b&language=en-US";
     //useEffect on page load to api fetch data
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
-        fetchPopular();
+        fetchPopular().then((res) => {
+            setLoading(false);
+        });
         console.log(data);
     }, [])
     const fetchPopular = async () => {
@@ -37,7 +44,7 @@ const landingPage: NextPage<Props> = () => {
  
     return (
         <div>
-            <Header modifiers='bg-white shadow-lg'>
+            <Header modifiers='bg-white'>
                 <div className='flex items-center space-between w-full'>
                     <Link href='/'>
                         <div className='flex cursor-pointer hover:animate-bouncer-infinite ml-5'>
@@ -51,7 +58,7 @@ const landingPage: NextPage<Props> = () => {
                 </div>
             </Header>
             <div className='flex flex-wrap justify-center'>
-                <Search items={data} modifiers='' renderFunction={renderItems} childComponentModifiers=''/>
+                <Search items={data} modifiers='' renderFunction={renderItems} childComponentModifiers='' loading={loading}/>
             </div>
         </div>
     );

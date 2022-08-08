@@ -11,9 +11,9 @@ const MovieCard: React.FC<Props> = ({movie, modifiers}) => {
     return (
         <div className="w-1/3 bg-white rounded-lg shadow-lg m-4 max-h-80 flex">
             <img src={IMAGE_SOURCE_ROOT + movie.poster_path}/>
-            <div className='px-2 w-1/2 flex flex-col'>
+            <div className='px-2 w-full flex flex-col'>
                 <div className='h-1/2'>
-                    <h1 className='text-2xl w-30 h-fit font-bold truncate'>{movie.title}</h1>
+                    <h1 className='text-2xl w-[17rem] h-fit font-bold truncate'>{movie.title}</h1>
                     <p className='line-clamp-6'> {movie.overview} </p>
                 </div>
                 <div className='flex h-1/2 items-end justify-center w-full pb-2'>
