@@ -13,6 +13,12 @@ module.exports = {
         'secondary-2': '#91DC5A',
         'white': '#FFF7ED',
       },
+      borderWidth: {
+        '1': '1px',
+      },
+      spacing: {
+        '45': '11.25rem',
+      },
       backgroundImage: {
         'div-separator': "url('../assets/wave5.svg')",
       },
@@ -20,6 +26,14 @@ module.exports = {
         'slide': {
           '0%': {
             'transform': 'translateX(-800px)',
+          },
+          '100%': {
+            'transform': 'translateX(0)',
+          }
+        },
+        'slide-mobile': {
+          '0%': {
+            'transform': 'translateX(-200px)',
           },
           '100%': {
             'transform': 'translateX(0)',
@@ -58,7 +72,8 @@ module.exports = {
         'slide-in': 'slide 1s ease-in-out',
         'fade-in': 'fade 1s ease-in',
         'fade-in-out-half': 'fade-half 1s ease-in-out',
-        'bouncer-infinite': 'bouncer 1s infinite'
+        'bouncer-infinite': 'bouncer 1s infinite',
+        'slide-in-mobile': 'slide 1s ease-in-out'
       }
     },
   },

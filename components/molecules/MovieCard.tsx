@@ -9,14 +9,14 @@ type Props  = {
 const IMAGE_SOURCE_ROOT: string = 'https://image.tmdb.org/t/p/original';
 const MovieCard: React.FC<Props> = ({movie, modifiers}) => {
     return (
-        <div className="w-1/3 bg-white rounded-lg shadow-lg m-4 max-h-80 flex">
+        <div className="w-full md:w-1/3 bg-white rounded-lg shadow-lg md:max-h-max lg:max-h-80 m-4 flex max-h-80 flex-row md:flex md:flex-col lg:flex-row">
             <img src={IMAGE_SOURCE_ROOT + movie.poster_path}/>
-            <div className='px-2 w-full flex flex-col'>
-                <div className='h-1/2'>
-                    <h1 className='text-2xl w-[17rem] h-fit font-bold truncate'>{movie.title}</h1>
-                    <p className='line-clamp-6'> {movie.overview} </p>
+            <div className='px-3 py-3 w-full flex flex-col h-full'>
+                <div className='min-h-fit mb-auto'>
+                    <h1 className='relative text-2xl line-clamp-1 w-fit h-fit font-bold mb-2'>{movie.title}</h1>
+                    <p className='line-clamp-6 md:line-clamp-3 lg:line-clamp-6 before:absolute before:w-10 before:h-0.5 before:bg-primary'> {movie.overview} </p>
                 </div>
-                <div className='flex h-1/2 items-end justify-center w-full pb-2'>
+                <div className='flex h-1/2 items-end md:justify-center w-full pb-2 mt-5 lg:mt-none self-end'>
                     <Button type='primary' modifiers='w-full' link=''>Read More!</Button>
                 </div>
             </div>

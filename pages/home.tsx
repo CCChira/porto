@@ -36,6 +36,7 @@ const landingPage: NextPage<Props> = () => {
         movies.results.map((movie: Movie) => {
             if(!movie.title) {
                 movie.untitled = true;
+                movie.title = '*Untitled*'
             } 
             return movie
         })
