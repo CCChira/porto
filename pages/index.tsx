@@ -23,12 +23,12 @@ export default function Home() {
         </div>
         <div>
           {
-            loaded ? 
+            loaded ?
               <Button type='primary' modifiers='w-80 h-16 xl:animate-fade-in' link='/home' >
-                  <a>Continue</a>
-              </Button> 
-            :
-             <div className='w-80 h-16'></div>
+                <a>Continue</a>
+              </Button>
+              :
+              <div className='w-80 h-16'></div>
           }
         </div>
       </div>
