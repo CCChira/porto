@@ -1,13 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-type Props  = {
-    children: JSX.Element,
-}
+type Props = {
+  children: JSX.Element;
+};
 
-const Input: React.FC<Props> = ({children}) => {
-    return (
-        <></>
-    );
-}
+const Input: React.FC<Props> = ({ children }) => {
+  return <></>;
+};
 
 export default Input;

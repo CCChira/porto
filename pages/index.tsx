@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'; //react stuff
-import Image from 'next/image' //nextJS stuff
+import Image from 'next/image'; //nextJS stuff
 
 import Button from '../components/atoms/Button'; //MY components
 import Header from '../components/Header';
@@ -11,29 +11,30 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoaded(true);
-    }
-      , 1250);
+    }, 1250);
     return () => clearTimeout(timer);
-  }
-    , []);
+  }, []);
   return (
     <>
-      <div className='h-screen w-screen flex items-center justify-center bg-white flex-col'>
-        <div className='flex items-center justify-center flex h-fit w-full xl:animate-slide-in animate-slide-in-mobile mb-10'>
+      <div className="h-screen w-screen flex items-center justify-center bg-white flex-col">
+        <div className="flex items-center justify-center h-fit w-full xl:animate-slide-in animate-slide-in-mobile mb-10">
           <Image src={OrangeSlice} />
-          <h1 className='self-center text-7xl mt-10 mr-5'>Porto</h1>
+          <h1 className="self-center text-7xl mt-10 mr-5">Porto</h1>
         </div>
         <div>
-          {
-            loaded ?
-              <Button type='primary' modifiers='w-80 h-16 animate-fade-in' link='/home' >
-                <a>Continue</a>
-              </Button>
-              :
-              <div className='w-80 h-16'></div>
-          }
+          {loaded ? (
+            <Button
+              type="primary"
+              modifiers="w-80 h-16 animate-fade-in"
+              link="/home"
+            >
+              <a>Continue</a>
+            </Button>
+          ) : (
+            <div className="w-80 h-16"></div>
+          )}
         </div>
       </div>
     </>
-  )
+  );
 }

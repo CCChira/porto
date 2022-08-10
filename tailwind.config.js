@@ -12,6 +12,7 @@ module.exports = {
         'secondary': '#65C27D',
         'secondary-2': '#91DC5A',
         'white': '#FFF7ED',
+        'primary-highlight': '#FFE0B7'
       },
       borderWidth: {
         '1': '1px',

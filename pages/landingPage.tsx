@@ -3,15 +3,14 @@ import * as React from 'react';
 import Image from 'next/image';
 import OrangeSlice from '../assets/orange-svgrepo-com.svg';
 import { NextPage } from 'next';
-export interface Props {
-}
+export interface Props {}
 
 const landingPage: NextPage<Props> = () => {
   return (
-    <div className='h-screen w-screen'>
-      <Image src = {OrangeSlice}/>
+    <div className="h-screen w-screen">
+      <Image src={OrangeSlice} />
     </div>
   );
-}
+};
 
 export default landingPage;
