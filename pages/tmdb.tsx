@@ -46,22 +46,7 @@ const landingPage: NextPage<Props> = () => {
 
   return (
     <div>
-      <Header modifiers="bg-white">
-        <div className="flex items-center space-between w-full">
-          <Link href="/">
-            <div className="flex cursor-pointer hover:animate-bouncer-infinite ml-5">
-              <Image src={OrangeSlice} height="40" width="40" />
-              <h1 className="self-center text-3xl">Porto</h1>
-            </div>
-          </Link>
-          <div className="ml-auto mr-12">
-            <FontAwesomeIcon
-              icon={faBars}
-              className="text-primary hover:text-primary-light transition ease-in-out duration-300"
-            />
-          </div>
-        </div>
-      </Header>
+      <Header modifiers="bg-white"></Header>
       <div className="flex flex-wrap justify-center">
         <Search
           items={data}

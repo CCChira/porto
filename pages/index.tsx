@@ -16,22 +16,22 @@ export default function Home() {
   }, []);
   return (
     <>
-      <div className="h-screen w-screen flex items-center justify-center bg-white flex-col">
-        <div className="flex items-center justify-center h-fit w-full xl:animate-slide-in animate-slide-in-mobile mb-10">
+      <div className="flex flex-col items-center justify-center w-screen h-screen bg-white">
+        <div className="flex items-center justify-center w-full mb-10 h-fit animate-slide-in-mobile xl:animate-slide-in">
           <Image src={OrangeSlice} />
-          <h1 className="self-center text-7xl mt-10 mr-5">Porto</h1>
+          <h1 className="self-center mt-10 mr-5 text-7xl">Porto</h1>
         </div>
         <div>
           {loaded ? (
             <Button
               type="primary"
               modifiers="w-80 h-16 animate-fade-in"
-              link="/home"
+              link="/hub"
             >
               <a>Continue</a>
             </Button>
           ) : (
-            <div className="w-80 h-16"></div>
+            <div className="h-16 w-80"></div>
           )}
         </div>
       </div>
