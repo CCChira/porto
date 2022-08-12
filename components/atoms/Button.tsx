@@ -5,7 +5,7 @@ type Props = {
   type: string;
   modifiers: string;
   children: JSX.Element | string;
-  link: string;
+  link?: string;
 };
 const handleTypeChooser = (type: string) => {
   switch (type) {
@@ -20,13 +20,13 @@ const handleTypeChooser = (type: string) => {
   }
 };
 const Button: React.FC<Props> = ({ type, modifiers, children, link }) => {
-  const finalButtonClass: string = `px-4 py-2 rounded-full font-bold text-sm transition ease-in-out ${handleTypeChooser(
+  const finalButtonClass: string = `px-4 py-2 rounded-full font-bold text-sm transition ease-in-out duration-300 ${handleTypeChooser(
     type
   )} ${modifiers}`;
   return link ? (
     <Link href={link}>
       <div
-        className={`${finalButtonClass} flex items-center justify-center cursor-pointer`}
+        className={`${finalButtonClass} flex cursor-pointer items-center justify-center`}
       >
         {children}
       </div>

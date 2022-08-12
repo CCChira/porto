@@ -1,23 +1,31 @@
 import React from 'react';
 import Button from './Button';
+import WordleButton from './WordleButton';
 
 type Props = {
   rowLetters: string[];
   modifiers: string;
+  letterPressed: string;
+  setLetterPressed: Function;
 };
 
-const WordleRow: React.FC<Props> = ({ rowLetters, modifiers }) => {
+const WordleRow: React.FC<Props> = ({
+  rowLetters,
+  modifiers,
+  letterPressed,
+  setLetterPressed,
+}) => {
   return (
     <div className={'flex w-fit gap-4 ' + modifiers}>
       {rowLetters.map((letter: string, index: number) => {
         return (
-          <Button
-            type="primary"
-            modifiers="w-8 h-8 rounded-md flex items-center justify-center"
-            link=""
+          <WordleButton
+            key={index}
+            letterPressed={letterPressed}
+            setLetterPressed={setLetterPressed}
           >
             {letter}
-          </Button>
+          </WordleButton>
         );
       })}
     </div>
