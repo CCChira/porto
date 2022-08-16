@@ -16,6 +16,7 @@ const WordleButton: React.FC<Props> = ({
   useEffect(() => {
     setLetterPressed('');
   }, [animate]);
+
   useEffect(() => {
     if (letterPressed === children) {
       setAnimate('border-white border-2 bg-primary-light shadow-lg');
@@ -24,11 +25,20 @@ const WordleButton: React.FC<Props> = ({
       }, 310);
     }
   }, [letterPressed]);
-
+  const handleClick = () => {
+    dispatchEvent(
+      new CustomEvent('wordle-letter-pressed', { detail: children })
+    );
+  };
   return (
     <Button
       type="primary"
-      modifiers={`w-12 h-12 rounded-md flex items-center justify-center ${animate}`}
+      modifiers={
+        children.length > 1
+          ? `w-fit h-12 rounded-md flex items-center justify-center ${animate}`
+          : `w-12 h-12 rounded-md flex items-center justify-center ${animate}`
+      }
+      onClick={handleClick}
     >
       {children}
     </Button>

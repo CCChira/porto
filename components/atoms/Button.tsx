@@ -6,6 +6,7 @@ type Props = {
   modifiers: string;
   children: JSX.Element | string;
   link?: string;
+  onClick?: Function;
 };
 const handleTypeChooser = (type: string) => {
   switch (type) {
@@ -19,7 +20,13 @@ const handleTypeChooser = (type: string) => {
       return 'bg-black text-white font-bold py-2 px-4 rounded';
   }
 };
-const Button: React.FC<Props> = ({ type, modifiers, children, link }) => {
+const Button: React.FC<Props> = ({
+  type,
+  modifiers,
+  children,
+  link,
+  onClick,
+}) => {
   const finalButtonClass: string = `px-4 py-2 rounded-full font-bold text-sm transition ease-in-out duration-300 ${handleTypeChooser(
     type
   )} ${modifiers}`;
@@ -32,7 +39,12 @@ const Button: React.FC<Props> = ({ type, modifiers, children, link }) => {
       </div>
     </Link>
   ) : (
-    <button className={finalButtonClass}>{children}</button>
+    <button
+      className={finalButtonClass}
+      onClick={() => (onClick ? onClick() : null)}
+    >
+      {children}
+    </button>
   );
 };
 

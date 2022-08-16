@@ -5,9 +5,9 @@ import { WordleSolution } from '../../interfaces/wordleSolution';
 import { isAlphaNumeric } from '../../utils/stringCheckers';
 import { divide } from 'lodash';
 import Button from '../atoms/Button';
+import { words } from '../../constants/keyArrays';
 type Props = {};
 const WORD_LENGTH = 5;
-const solution = 'hello';
 
 const createSolutionObject = (solution: string) => {
   const solutionObject: WordleSolution = {};
@@ -24,36 +24,88 @@ const WordleBoard: React.FC<Props> = ({}) => {
   const [currentGuess, setCurrentGuess] = useState('');
   const [letterPressed, setLetterPressed] = useState('');
   const [isCorrect, setIsCorrect] = useState(false);
-
+  const [displayModal, setDisplayModal] = useState(false);
+  const [solution, setSolution] = useState('');
+  let wordsObject: { [key: string]: number } = {};
+  const solarray = solution.split('');
   useEffect(() => {
-    const handleType = (event: KeyboardEvent) => {
-      if (event.key === 'Enter') {
-        if (currentGuess.length !== 5) {
-          return;
-        }
+    setSolution(words[Math.floor(Math.random() * words.length)]);
+  }, []);
+  useEffect(() => {
+    window.addEventListener('keydown', handleType);
+    window.addEventListener(
+      'wordle-letter-pressed',
+      handleClick as EventListener
+    );
+    return () => {
+      window.removeEventListener('keydown', handleType);
+      window.removeEventListener(
+        'wordle-letter-pressed',
+        handleClick as EventListener
+      );
+    };
+  }, [currentGuess]);
+
+  const handleCorrectGuess = () => {
+    setGuesses(Array(6).fill(null));
+    setSolution(words[Math.floor(Math.random() * words.length)]);
+    setDisplayModal(false);
+  };
+
+  const handleClick = (event: CustomEvent) => {
+    if (event.detail === 'Enter') {
+      if (currentGuess.length !== 5) {
+        return;
+      }
+      if (words.find((word) => word === currentGuess)) {
         const newGuesses = [...guesses];
         newGuesses[guesses.findIndex((guess) => guess === null)] = currentGuess;
         setGuesses(newGuesses);
         setCurrentGuess('');
-        setIsCorrect(solution === currentGuess);
-      }
-      if (event.key === ' ') {
-        return;
-      }
-      if (event.key === 'Backspace') {
-        setCurrentGuess(currentGuess.slice(0, -1));
-        return;
-      }
-      if (!isAlphaNumeric(event.key)) return;
-      if (currentGuess.length < 5) {
-        setLetterPressed(event.key);
-        setCurrentGuess((oldGuess) => oldGuess + event.key);
-      }
-    };
-    window.addEventListener('keydown', handleType);
+        setDisplayModal(solution === currentGuess);
+      } else return;
+    }
+    if (event.detail === ' ') {
+      return;
+    }
+    if (event.detail === 'Backspace') {
+      setCurrentGuess(currentGuess.slice(0, -1));
+      return;
+    }
+    if (!isAlphaNumeric(event.detail)) return;
+    if (currentGuess.length < 5) {
+      setLetterPressed(event.detail);
+      setCurrentGuess((oldGuess) => oldGuess + event.detail);
+    }
+  };
 
-    return () => window.removeEventListener('keydown', handleType);
-  }, [currentGuess]);
+  const handleType = (event: KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      if (currentGuess.length !== 5) {
+        return;
+      }
+      if (words.find((word) => word === currentGuess)) {
+        const newGuesses = [...guesses];
+        newGuesses[guesses.findIndex((guess) => guess === null)] = currentGuess;
+        setGuesses(newGuesses);
+        setCurrentGuess('');
+        setDisplayModal(solution === currentGuess);
+      } else return;
+    }
+    if (event.key === ' ') {
+      return;
+    }
+    if (event.key === 'Backspace') {
+      setCurrentGuess(currentGuess.slice(0, -1));
+      return;
+    }
+    if (!isAlphaNumeric(event.key)) return;
+    if (currentGuess.length < 5) {
+      setLetterPressed(event.key);
+      setCurrentGuess((oldGuess) => oldGuess + event.key);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center mt-10">
       <div className="flex flex-col gap-2 my-5">
@@ -65,6 +117,7 @@ const WordleBoard: React.FC<Props> = ({}) => {
               guess={isCurrentGuess ? currentGuess : guess ?? ''}
               isFinal={!isCurrentGuess && guess != null}
               key={index}
+              solution={solution}
             />
           );
         })}
@@ -73,14 +126,33 @@ const WordleBoard: React.FC<Props> = ({}) => {
         letterPressed={letterPressed}
         setLetterPressed={setLetterPressed}
       />
-      {isCorrect ? (
+      <div className="flex gap-2 mt-10">
+        {solarray.map((letter: string, index: number) => {
+          return (
+            <div
+              key={index}
+              className="flex items-center justify-center w-12 h-12 font-bold text-white transition duration-300 ease-in-out bg-white rounded-md hover:cursor-default hover:text-primary"
+            >
+              {letter}
+            </div>
+          );
+        })}
+      </div>
+
+      {displayModal ? (
         <Modal>
           <div>
-            <h2>Congratulations!</h2>
-            <p>You have solved the wordle!</p>
-            <Button type="primary" modifiers="h-12">
-              Get new word?
-            </Button>
+            <h2 className="text-2xl">Congratulations!</h2>
+            <div className="m-10 ml-0">
+              <p className="mt-10">You have solved the wordle!</p>
+              <Button
+                type="primary"
+                modifiers="h-12 mt-10"
+                onClick={() => handleCorrectGuess()}
+              >
+                Get new word?
+              </Button>
+            </div>
           </div>
         </Modal>
       ) : null}
@@ -90,8 +162,9 @@ const WordleBoard: React.FC<Props> = ({}) => {
 type LineProps = {
   guess: Array<string> | Array<null>;
   isFinal: boolean;
+  solution: string;
 };
-const Line: React.FC<LineProps> = ({ guess, isFinal }) => {
+const Line: React.FC<LineProps> = ({ guess, isFinal, solution }) => {
   const lineSolution = createSolutionObject(solution);
   const squares: JSX.Element[] = [];
   const tile = {
