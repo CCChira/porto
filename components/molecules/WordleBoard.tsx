@@ -31,6 +31,7 @@ const WordleBoard: React.FC<Props> = ({}) => {
   useEffect(() => {
     setSolution(words[Math.floor(Math.random() * words.length)]);
   }, []);
+
   useEffect(() => {
     window.addEventListener('keydown', handleType);
     window.addEventListener(
@@ -126,17 +127,20 @@ const WordleBoard: React.FC<Props> = ({}) => {
         letterPressed={letterPressed}
         setLetterPressed={setLetterPressed}
       />
-      <div className="flex gap-2 mt-10">
-        {solarray.map((letter: string, index: number) => {
-          return (
-            <div
-              key={index}
-              className="flex items-center justify-center w-12 h-12 font-bold text-white transition duration-300 ease-in-out bg-white rounded-md hover:cursor-default hover:text-primary"
-            >
-              {letter}
-            </div>
-          );
-        })}
+      <div className="mt-10">
+        <p className="text-center">Solution(if you're a pussy)</p>
+        <div className="flex gap-2">
+          {solarray.map((letter: string, index: number) => {
+            return (
+              <div
+                key={index}
+                className="flex items-center justify-center w-12 h-12 font-bold text-gray-600 transition duration-300 ease-in-out bg-gray-600 rounded-md hover:cursor-default hover:text-white"
+              >
+                {letter}
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {displayModal ? (
