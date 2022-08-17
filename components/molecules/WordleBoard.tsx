@@ -24,6 +24,7 @@ const WordleBoard: React.FC<Props> = ({}) => {
   const [letterPressed, setLetterPressed] = useState('');
   const [displayModal, setDisplayModal] = useState(false);
   const [solution, setSolution] = useState('');
+  const [lost, setLost] = useState(false);
   const solarray = solution.split('');
 
   useEffect(() => {
@@ -68,7 +69,9 @@ const WordleBoard: React.FC<Props> = ({}) => {
         setGuesses(newGuesses);
         setCurrentGuess('');
         setDisplayModal(solution === currentGuess);
-      } else return;
+      } else {
+        setLost(true);
+      }
     }
     if (action === ' ') {
       return;

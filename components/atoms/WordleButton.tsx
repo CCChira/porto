@@ -26,7 +26,7 @@ const WordleButton: React.FC<Props> = ({
 
   useEffect(() => {
     if (letterPressed === children) {
-      setAnimate('border-white border-2 bg-primary-light shadow-lg');
+      setAnimate('border-white border-2 bg-gray-600 text-white shadow-2xl');
       setTimeout(() => {
         setAnimate('');
       }, 310);
