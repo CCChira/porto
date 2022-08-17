@@ -11,9 +11,9 @@ const Modal: React.FC<Props> = ({ children }) => {
   const [hovered, setHovered] = useState(false);
   return (
     <div
-      className={`${isOpen} fixed top-0 left-0 z-10 h-full w-full overflow-auto bg-black bg-opacity-40`}
+      className={`${isOpen} fixed top-0 left-0 z-10 h-full w-full overflow-auto bg-black bg-opacity-40 transition duration-300 ease-in-out`}
     >
-      <div className="my-[15%] mx-auto w-3/4 rounded-xl bg-white p-5 shadow-lg">
+      <div className="my-[15%] mx-auto w-3/4 animate-fade-in-fast rounded-xl bg-white p-5 shadow-lg">
         <div
           className={`${
             hovered ? 'bg-primary' : 'bg-white'

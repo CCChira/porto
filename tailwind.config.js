@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */ 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -67,14 +67,15 @@ module.exports = {
             'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)',
           }
         }
-        
+
       },
       animation: {
         'slide-in': 'slide 1s ease-in-out',
         'fade-in': 'fade 1s ease-in',
         'fade-in-out-half': 'fade-half 1s ease-in-out',
         'bouncer-infinite': 'bouncer 1s infinite',
-        'slide-in-mobile': 'slide 1s ease-in-out'
+        'slide-in-mobile': 'slide 1s ease-in-out',
+        'fade-in-fast': 'fade 0.2s ease-in-out'
       }
     },
   },

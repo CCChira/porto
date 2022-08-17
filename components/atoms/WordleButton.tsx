@@ -7,6 +7,13 @@ type Props = {
   letterPressed: string;
   setLetterPressed: Function;
 };
+const tile = {
+  wrong: 'bg-gray-600 text-white',
+  correct: 'bg-secondary text-white',
+  wrongPosition: 'bg-primary text-white',
+  default:
+    'flex items-center justify-center w-12 h-12 font-bold transition duration-300 ease-in-out bg-white rounded-md text-primary hover:cursor-default',
+};
 const WordleButton: React.FC<Props> = ({
   children,
   letterPressed,
