@@ -28,7 +28,6 @@ const WordleBoard: React.FC<Props> = ({}) => {
   const solarray = solution.split('');
 
   useEffect(() => {
-    console.log(words.length);
     setSolution(words[Math.floor(Math.random() * words.length)]);
   }, []);
 
@@ -52,6 +51,11 @@ const WordleBoard: React.FC<Props> = ({}) => {
     setSolution(words[Math.floor(Math.random() * words.length)]);
     setDisplayModal(false);
   };
+  const handleEndOfGame = () => {
+    setGuesses(Array(6).fill(null));
+    setSolution(words[Math.floor(Math.random() * words.length)]);
+    setLost(false);
+  };
   const handleAction = (event: CustomEvent | KeyboardEvent) => {
     let action: string;
     if (event instanceof CustomEvent) {
@@ -67,10 +71,13 @@ const WordleBoard: React.FC<Props> = ({}) => {
         const newGuesses = [...guesses];
         newGuesses[guesses.findIndex((guess) => guess === null)] = currentGuess;
         setGuesses(newGuesses);
+        if (guesses.findIndex((guess) => guess === null) === 5) {
+          setCurrentGuess('');
+          setLost(true);
+          return;
+        }
         setCurrentGuess('');
         setDisplayModal(solution === currentGuess);
-      } else {
-        setLost(true);
       }
     }
     if (action === ' ') {
@@ -149,6 +156,23 @@ const WordleBoard: React.FC<Props> = ({}) => {
           </div>
         </Modal>
       ) : null}
+      {lost ? (
+        <Modal>
+          <div>
+            <h2 className="text-2xl">We're sorry you suck</h2>
+            <div className="m-10 ml-0">
+              <p className="mt-10">You haven't managed to solve the wordle</p>
+              <Button
+                type="primary"
+                modifiers="h-12 mt-10"
+                onClick={() => handleEndOfGame()}
+              >
+                Get new word?
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      ) : null}
     </div>
   );
 };
@@ -189,7 +213,14 @@ const Line: React.FC<LineProps> = ({ guess, isFinal, solution }) => {
       }
     }
     squares.push(
-      <div key={i} className={tileFinalClass ? tileFinalClass : tile.default}>
+      <div
+        key={i}
+        className={
+          tileFinalClass
+            ? tileFinalClass
+            : tile.default + ' bg-primary-highlight'
+        }
+      >
         {currentCharacter ? currentCharacter : ''}
       </div>
     );
@@ -201,7 +232,7 @@ const Legend: React.FC = () => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center">
-        <div className={tile.default}>x</div>
+        <div className={tile.default + ' bg-primary-highlight'}>x</div>
         <p className="ml-10">Unsubmitted letter</p>
       </div>
 

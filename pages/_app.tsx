@@ -5,7 +5,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div className="h-screen bg-primary-highlight">
+    <div className="h-screen bg-white">
       <Component {...pageProps} />
     </div>
   );
