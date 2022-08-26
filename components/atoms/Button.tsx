@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 type Props = {
   type: string;
-  modifiers: string;
+  modifiers?: string;
   children: JSX.Element | string;
   link?: string;
   onClick?: Function;

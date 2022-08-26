@@ -1,11 +1,9 @@
 //create nextjs page component with typescript
 import * as React from 'react';
-import Image from 'next/image';
-import OrangeSlice from '../assets/orange-svgrepo-com.svg';
 import { NextPage } from 'next';
 import Header from '../components/Header';
-import Link from 'next/link';
 import Button from '../components/atoms/Button';
+
 export interface Props {}
 
 const landingPage: NextPage<Props> = () => {
@@ -13,6 +11,9 @@ const landingPage: NextPage<Props> = () => {
     <div className="h-full">
       <Header modifiers="bg-white"></Header>
       <div className="flex flex-col items-center justify-center w-full h-full gap-10">
+        <input type="text" placeholder="username" />
+        <input type="email" placeholder="email" />
+        <Button type="primary">Login</Button>
         <Button type="primary" modifiers="w-40 h-12" link="/tmdb">
           TMDB playground
         </Button>
