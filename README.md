@@ -1,8 +1,12 @@
 # porto
 Personal Presentation website, built with NextJS + Typescript, Tailwind, and soon Redux/ReduxToolkit
+
 :white_check_mark: mostly done
+
 :heavy_check_mark: done
+
 :x::in progress/not begun
+
 :white_check_mark: Step 1
 -> Relearning React. Querying TMDB database to make a search display of movies.(needs polishing, got bored of it)
 
