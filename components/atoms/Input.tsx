@@ -1,11 +1,21 @@
 import React from 'react';
 
 type Props = {
-  children: JSX.Element;
+  ref: React.Ref<HTMLInputElement>;
+  placeholder: string;
+  modifiers: string;
+  type: string;
 };
 
-const Input: React.FC<Props> = ({ children }) => {
-  return <></>;
+const Input: React.FC<Props> = ({ ref, placeholder, modifiers, type }) => {
+  return (
+    <input
+      ref={ref}
+      type={type}
+      placeholder={placeholder}
+      className={`mx-5 my-2 w-full rounded-full border-2 border-transparent p-2 px-4 text-primary placeholder-primary shadow-md outline-none transition ease-in-out focus:border-primary  ${modifiers}`}
+    />
+  );
 };
 
 export default Input;

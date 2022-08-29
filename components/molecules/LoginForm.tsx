@@ -15,6 +15,7 @@ import useSocialsAuth from '../../utils/customHooks/useSocialsAuth';
 import useLogin from '../../utils/customHooks/useLogin';
 import useRegister from '../../utils/customHooks/useRegister';
 import { useRouter } from 'next/router';
+import Input from '../atoms/Input';
 type Props = {
   path?: string;
 };
@@ -43,6 +44,18 @@ const LoginForm: React.FC<Props> = ({ path }) => {
     const cPassword = confirmPassRef.current?.value;
     const userName = nameRef.current?.value;
     if (password !== cPassword) {
+      if (!(email && password)) {
+        if (!emailValidator(email)) {
+          setCorrectEmail(false);
+          if (!passwordValidator(password)) {
+            setCorrectPassword(false);
+          }
+          return;
+        } else if (!passwordValidator(password)) {
+          setCorrectPassword(false);
+          return;
+        }
+      }
       setCorrectConfirmPass(false);
       return;
     }
@@ -92,39 +105,32 @@ const LoginForm: React.FC<Props> = ({ path }) => {
   return (
     <>
       <div className="flex flex-col items-center justify-center transition duration-300 ease-in-out">
-        <input
+        <Input
           ref={nameRef}
           type="text"
           placeholder="Username"
-          className={`mx-5 my-2 w-full rounded-full border-2 border-transparent p-2 px-4 text-primary placeholder-primary shadow-md outline-none transition ease-in-out focus:border-primary  ${
-            formType === 'login' ? 'hidden' : 'block'
-          }`}
+          modifiers={`${formType === 'login' ? 'hidden' : 'block'}`}
         />
-        <input
+        <Input
           ref={emailRef}
-          type="Email"
+          type="email"
           placeholder="Email"
-          className={`mx-5 my-2 w-full rounded-full border-2 border-transparent p-2 px-4 text-primary placeholder-primary shadow-md outline-none transition ease-in-out focus:border-primary ${
-            correctEmail ? '' : 'border-red-500'
-          }`}
+          modifiers={`${correctEmail ? '' : 'border-red-500'}`}
         />
-        <input
+        <Input
           ref={passRef}
           type="password"
           placeholder="Password"
-          className={`mx-5 my-2 w-full rounded-full border-2 border-transparent p-2 px-4 text-primary placeholder-primary shadow-md outline-none transition ease-in-out focus:border-primary ${
-            correctPassword ? '' : 'border-red-500'
-          }`}
+          modifiers={`${correctPassword ? '' : 'border-red-500'}`}
         />
-        <input
+        <Input
           ref={confirmPassRef}
           type="password"
           placeholder="Confirm Password"
-          className={`mx-5 my-2 w-full rounded-full border-2 border-transparent p-2 px-4 text-primary placeholder-primary shadow-md outline-none transition ease-in-out focus:border-primary  ${
-            formType === 'login' ? 'hidden' : 'block'
-          } ${correctConfirmPass ? '' : 'border-red-500'}`}
+          modifiers={`${formType === 'login' ? 'hidden' : 'block'} ${
+            correctConfirmPass ? '' : 'border-red-500'
+          }`}
         />
-
         <div className="flex flex-col w-full">
           <div className="flex items-center justify-center w-full mt-2">
             <Button
