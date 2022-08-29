@@ -11,9 +11,6 @@ const landingPage: NextPage<Props> = () => {
     <div className="h-full">
       <Header modifiers="bg-white"></Header>
       <div className="flex flex-col items-center justify-center w-full h-full gap-10">
-        <input type="text" placeholder="username" />
-        <input type="email" placeholder="email" />
-        <Button type="primary">Login</Button>
         <Button type="primary" modifiers="w-40 h-12" link="/tmdb">
           TMDB playground
         </Button>

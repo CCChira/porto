@@ -5,6 +5,7 @@ import {
   githubLoginProvider,
   facebookLoginProvider,
   googleLoginProvider,
+  emailPassLoginProvider,
 } from '../../firebase/firebaseConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -13,7 +14,6 @@ import {
   selectUserEmail,
   selectUserName,
 } from '../../store/slices/userSlice';
-import { signInWithPopup } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faGoogle,
@@ -21,50 +21,84 @@ import {
   faGithubAlt,
   faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
-type Props = {};
+import {
+  emailValidator,
+  passwordValidator,
+} from '../../utils/validators/authValidators';
+import useSocialsAuth from '../../utils/customHooks/useSocialsAuth';
+import useLogin from '../../utils/customHooks/useLogin';
+import useRegister from '../../utils/customHooks/useRegister';
+import { useRouter } from 'next/router';
+type Props = {
+  path?: string;
+};
 
-const LoginForm: React.FC<Props> = ({}) => {
+const LoginForm: React.FC<Props> = ({ path }) => {
+  const [correctEmail, setCorrectEmail] = useState(true);
+  const [correctPassword, setCorrectPassword] = useState(true);
+  const [correctConfirmPass, setCorrectConfirmPass] = useState(true);
   const [formType, setFormType] = useState('login');
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
   const confirmPassRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
-  const userName = useSelector(selectUserName);
-  const userEmail = useSelector(selectUserEmail);
-  const handleSignInWithSocial = async (
-    provider:
-      | typeof googleLoginProvider
-      | typeof githubLoginProvider
-      | typeof facebookLoginProvider
-  ) => {
-    try {
-      const res = await signInWithPopup(auth, provider);
-      dispatch(
-        setActiveUser({
-          userName: res.user.displayName,
-          userEmail: res.user.email,
-        })
+
+  const { handleLogin } = useSocialsAuth();
+  const { handleLoginEmailPass } = useLogin();
+  const { handleSignup } = useRegister();
+  const router = useRouter();
+  const handleSignInWithSocial = (provider: string) => {
+    handleLogin(provider).then((res) => router.push('/' + path));
+  };
+  const handleRegister = async () => {
+    const email = emailRef.current?.value;
+    const password = passRef.current?.value;
+    const cPassword = confirmPassRef.current?.value;
+    const userName = nameRef.current?.value;
+    if (password !== cPassword) {
+      setCorrectConfirmPass(false);
+      return;
+    }
+    handleSignup(email, password, userName).then((res) =>
+      router.push('/' + path)
+    );
+  };
+  const handleSignIn = async () => {
+    const email = emailRef.current?.value;
+    const password = passRef.current?.value;
+    if (email && password) {
+      if (!emailValidator(email)) {
+        setCorrectEmail(false);
+        if (!passwordValidator(password)) {
+          setCorrectPassword(false);
+        }
+        return;
+      } else if (!passwordValidator(password)) {
+        setCorrectPassword(false);
+        return;
+      }
+      handleLoginEmailPass(email, password).then((res) =>
+        router.push('/' + path)
       );
-    } catch (error) {
-      console.log(error);
+      setCorrectPassword(true);
+      setCorrectEmail(false);
     }
   };
-  const handleSignUp = async () => {};
-  const handleSignIn = async () => {
-    // const email = emailRef.current?.value;
-    // const password = emailRef.current?.value;
-    // try {
-    //   const res = await emailPassLoginProvider(email, password);
-    //   dispatch(
-    //     setActiveUser({
-    //       userName: res.user.displayName,
-    //       userEmail: res.user.email,
-    //     })
-    //   );
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  const handleAction = (action: string, modifier?: string) => {
+    switch (action) {
+      case 'login':
+        handleSignIn();
+        break;
+      case 'socials':
+        handleSignInWithSocial(modifier ? modifier : '');
+        break;
+      case 'register':
+        handleRegister();
+        break;
+      default:
+        break;
+    }
   };
   const switchFormType = () => {
     formType === 'login' ? setFormType('signup') : setFormType('login');
@@ -76,7 +110,7 @@ const LoginForm: React.FC<Props> = ({}) => {
           ref={nameRef}
           type="text"
           placeholder="Username"
-          className={`mx-5 my-2 w-full rounded-full border-2 border-transparent p-2 px-4 placeholder-primary shadow-md outline-none transition ease-in-out focus:border-primary  ${
+          className={`mx-5 my-2 w-full rounded-full border-2 border-transparent p-2 px-4 text-primary placeholder-primary shadow-md outline-none transition ease-in-out focus:border-primary  ${
             formType === 'login' ? 'hidden' : 'block'
           }`}
         />
@@ -84,28 +118,36 @@ const LoginForm: React.FC<Props> = ({}) => {
           ref={emailRef}
           type="Email"
           placeholder="Email"
-          className="w-full p-2 px-4 mx-5 my-2 transition ease-in-out border-2 border-transparent rounded-full shadow-md outline-none placeholder-primary focus:border-primary"
+          className={`mx-5 my-2 w-full rounded-full border-2 border-transparent p-2 px-4 text-primary placeholder-primary shadow-md outline-none transition ease-in-out focus:border-primary ${
+            correctEmail ? '' : 'border-red-500'
+          }`}
         />
         <input
           ref={passRef}
           type="password"
           placeholder="Password"
-          className="w-full p-2 px-4 mx-5 my-2 transition ease-in-out border-2 border-transparent rounded-full shadow-md outline-none placeholder-primary focus:border-primary"
+          className={`mx-5 my-2 w-full rounded-full border-2 border-transparent p-2 px-4 text-primary placeholder-primary shadow-md outline-none transition ease-in-out focus:border-primary ${
+            correctPassword ? '' : 'border-red-500'
+          }`}
         />
         <input
           ref={confirmPassRef}
           type="password"
           placeholder="Confirm Password"
-          className={`mx-5 my-2 w-full rounded-full border-2 border-transparent p-2 px-4 placeholder-primary shadow-md outline-none transition ease-in-out focus:border-primary  ${
+          className={`mx-5 my-2 w-full rounded-full border-2 border-transparent p-2 px-4 text-primary placeholder-primary shadow-md outline-none transition ease-in-out focus:border-primary  ${
             formType === 'login' ? 'hidden' : 'block'
-          }`}
+          } ${correctConfirmPass ? '' : 'border-red-500'}`}
         />
 
         <div className="flex flex-col w-full">
           <div className="flex items-center justify-center w-full mt-2">
             <Button
               type="primary"
-              onClick={formType === 'login' ? handleSignIn : switchFormType}
+              onClick={
+                formType === 'login'
+                  ? () => handleAction('login')
+                  : switchFormType
+              }
               modifiers="mr-5 w-full"
             >
               Sign In
@@ -113,7 +155,11 @@ const LoginForm: React.FC<Props> = ({}) => {
             <span className="text-primary">or</span>
             <Button
               type="primary"
-              onClick={formType === 'login' ? switchFormType : handleSignUp}
+              onClick={
+                formType === 'login'
+                  ? switchFormType
+                  : () => handleAction('register')
+              }
               modifiers="ml-5 w-full"
             >
               Sign Up
@@ -126,17 +172,17 @@ const LoginForm: React.FC<Props> = ({}) => {
               <FontAwesomeIcon
                 icon={faGoogle}
                 className="text-xl transition duration-300 ease-in-out text-primary hover:cursor-pointer hover:text-primary-light"
-                onClick={() => handleSignInWithSocial(googleLoginProvider)}
+                onClick={() => handleAction('socials', 'google')}
               />
               <FontAwesomeIcon
                 icon={faFacebook}
                 className="text-xl transition duration-300 ease-in-out text-primary hover:cursor-pointer hover:text-primary-light"
-                onClick={() => handleSignInWithSocial(facebookLoginProvider)}
+                onClick={() => handleAction('socials', 'facebook')}
               />
               <FontAwesomeIcon
                 icon={faGithubAlt}
                 className="text-xl transition duration-300 ease-in-out text-primary hover:cursor-pointer hover:text-primary-light"
-                onClick={() => handleSignInWithSocial(githubLoginProvider)}
+                onClick={() => handleAction('socials', 'github')}
               />
             </div>
           </div>

@@ -25,7 +25,7 @@ export default function Home() {
           </div>
         </div>
         <div className="flex items-center justify-center w-1/2 h-full bg-primary-highlight">
-          {userName && userEmail ? null : <LoginForm />}
+          {userName && userEmail ? null : <LoginForm path="hub" />}
         </div>
       </div>
     </>
