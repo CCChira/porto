@@ -1,5 +1,5 @@
 import React from 'react';
-import { qwerty } from '../../constants/keyArrays';
+import { qwerty } from '../../../constants/keyArrays';
 import WordleRow from './WordleKeyboardRow';
 type Props = {
   letterPressed: string;
