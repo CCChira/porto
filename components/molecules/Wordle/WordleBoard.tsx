@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import WordleKeyboard from '../atoms/WordleKeyboard';
-import Modal from '../molecules/Modal';
-import Button from '../atoms/Button';
-import { words } from '../../constants/keyArrays';
-import { tile } from '../../constants/keyArrays';
-import { WordleSolution } from '../../interfaces/wordleSolution';
-import { isAlphaNumeric } from '../../utils/stringCheckers';
+import WordleKeyboard from '../../atoms/Wordle/WordleKeyboard';
+import Modal from '../Modal';
+import Button from '../../atoms/Button';
+import { words } from '../../../constants/keyArrays';
+import { tile } from '../../../constants/keyArrays';
+import { WordleSolution } from '../../../interfaces/wordleSolution';
+import { isAlphaNumeric } from '../../../utils/stringCheckers';
 type Props = {};
 const WORD_LENGTH = 5;
 

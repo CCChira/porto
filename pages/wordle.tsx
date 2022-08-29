@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NextPage } from 'next';
 import Header from '../components/Header';
 import Button from '../components/atoms/Button';
-import WordleBoard from '../components/molecules/WordleBoard';
+import WordleBoard from '../components/molecules/Wordle/WordleBoard';
 export interface Props {}
 
 const landingPage: NextPage<Props> = () => {

@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react'; //react stuff
-import Image from 'next/image';
-import { NextPage } from 'next'; //nextJS stuff
-import Link from 'next/link';
 
-import { faBars } from '@fortawesome/free-solid-svg-icons'; //font awesome stuff
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { NextPage } from 'next'; //nextJS stuff
 
 import Search from '../components/molecules/Search'; //MY components
 import Header from '../components/Header';

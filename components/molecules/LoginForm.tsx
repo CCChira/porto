@@ -1,25 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Button from '../atoms/Button';
-import {
-  auth,
-  githubLoginProvider,
-  facebookLoginProvider,
-  googleLoginProvider,
-  emailPassLoginProvider,
-} from '../../firebase/firebaseConfig';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  setActiveUser,
-  setUserLogout,
-  selectUserEmail,
-  selectUserName,
-} from '../../store/slices/userSlice';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faGoogle,
   faFacebook,
   faGithubAlt,
-  faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
 import {
   emailValidator,

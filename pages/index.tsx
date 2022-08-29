@@ -3,14 +3,8 @@ import Image from 'next/image'; //nextJS stuff
 
 import OrangeSlice from '../assets/orange-svgrepo-com.svg'; //constants, assets and types
 import LoginForm from '../components/molecules/LoginForm';
-import { auth } from '../firebase/firebaseConfig';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  setActiveUser,
-  setUserLogout,
-  selectUserEmail,
-  selectUserName,
-} from '../store/slices/userSlice';
+import { useSelector } from 'react-redux';
+import { selectUserEmail, selectUserName } from '../store/slices/userSlice';
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const userName = useSelector(selectUserName);

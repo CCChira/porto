@@ -1,9 +1,7 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react'; //react Stuff
 
-import { debounce } from 'lodash'; //lodash stuff
 import { faList, faTableCells } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import MovieCard from './MovieCard'; //components
 
 import { Movie } from '../../interfaces/movieResponse'; //constants, assets and types
 type Props = {

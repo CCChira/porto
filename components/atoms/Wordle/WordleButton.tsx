@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Button from './Button';
+import Button from '../Button';
 
 type Props = {
   children: string;
