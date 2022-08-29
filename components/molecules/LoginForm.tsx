@@ -106,25 +106,25 @@ const LoginForm: React.FC<Props> = ({ path }) => {
     <>
       <div className="flex flex-col items-center justify-center transition duration-300 ease-in-out">
         <Input
-          ref={nameRef}
+          reff={nameRef}
           type="text"
           placeholder="Username"
           modifiers={`${formType === 'login' ? 'hidden' : 'block'}`}
         />
         <Input
-          ref={emailRef}
+          reff={emailRef}
           type="email"
           placeholder="Email"
           modifiers={`${correctEmail ? '' : 'border-red-500'}`}
         />
         <Input
-          ref={passRef}
+          reff={passRef}
           type="password"
           placeholder="Password"
           modifiers={`${correctPassword ? '' : 'border-red-500'}`}
         />
         <Input
-          ref={confirmPassRef}
+          reff={confirmPassRef}
           type="password"
           placeholder="Confirm Password"
           modifiers={`${formType === 'login' ? 'hidden' : 'block'} ${
